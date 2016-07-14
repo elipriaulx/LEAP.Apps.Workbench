@@ -1,0 +1,17 @@
+﻿<Window x:Class="LEAP.Apps.ReadViewerDesktop.Splash"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LEAP.Apps.ReadViewerDesktop"
+        mc:Ignorable="d"
+        xmlns:viewModels="clr-namespace:LEAP.Apps.ReadViewerDesktop.ViewModels"
+        xmlns:mvvm="http://prismlibrary.com/"
+        mvvm:ViewModelLocator.AutoWireViewModel="True"
+        Title="Splash" Height="320" Width="480"
+        d:DataContext="{d:DesignInstance {x:Type viewModels:SplashViewModel}, IsDesignTimeCreatable=True}"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+    <Grid>
+        <TextBlock Text="{Binding Title}" />
+    </Grid>
+</Window>
