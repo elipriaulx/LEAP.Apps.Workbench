@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
-using LEAP.Apps.ReadViewerDesktop.Core.ViewModels;
+using LEAP.Apps.Workbench.Core.ViewModels;
 using Prism.Regions;
 
 namespace LEAP.Apps.Workbench.Plugins.ImageViewerExample.ViewModels

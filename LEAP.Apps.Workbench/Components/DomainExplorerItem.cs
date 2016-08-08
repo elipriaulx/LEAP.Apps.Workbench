@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using LEAP.Apps.Workbench.Core.Components;
 
-namespace LEAP.Apps.Workbench.Plugins.ImageViewerExample.Components
+namespace LEAP.Apps.Workbench.Components
 {
     public class DomainExplorerItem : IDomainExplorerItem
     {
