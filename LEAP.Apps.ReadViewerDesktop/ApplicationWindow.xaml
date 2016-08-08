@@ -4,9 +4,199 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LEAP.Apps.ReadViewerDesktop"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
         mc:Ignorable="d"
-        Title="ApplicationWindow" Height="300" Width="300">
+        xmlns:viewModels="clr-namespace:LEAP.Apps.ReadViewerDesktop.ViewModels"
+        xmlns:mvvm="http://prismlibrary.com/"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        d:DataContext="{d:DesignInstance {x:Type viewModels:ApplicationWindowViewModel}, IsDesignTimeCreatable=True}"
+        Title="{Binding Title}" Height="1080" Width="1920" WindowState="Maximized">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding OnLoadedCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/LEAP.Apps.ReadViewerDesktop.Core;component/Styles/BaseStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <SolidColorBrush x:Key="ListBorder" Color="#828790"/>
+            <Style x:Key="DomainExplorerTreeStyle" TargetType="{x:Type TreeView}">
+                <Setter Property="Foreground" Value="{StaticResource DomainExplorerContentForegroundColour}"/>
+                <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TreeView}">
+                            <Border x:Name="Bd" SnapsToDevicePixels="true" VerticalAlignment="Stretch">
+                                <ScrollViewer Padding="5" x:Name="_tv_scrollviewer_" CanContentScroll="false" Focusable="false" HorizontalScrollBarVisibility="auto" VerticalScrollBarVisibility="auto" VerticalAlignment="Stretch">
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="false">
+                                </Trigger>
+                                <Trigger Property="VirtualizingPanel.IsVirtualizing" Value="true">
+                                    <Setter Property="CanContentScroll" TargetName="_tv_scrollviewer_" Value="true"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="VirtualizingPanel.IsVirtualizing" Value="true">
+                        <Setter Property="ItemsPanel">
+                            <Setter.Value>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel/>
+                                </ItemsPanelTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid.Resources>
+
+        </Grid.Resources>
+
+        <!-- Title Bar -->
+        <Grid Grid.Row="0" Height="64" Background="{StaticResource TitleBarBackgroundColour}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Source="pack://application:,,,/Resources/LEAP-Workbench-Icon-Large.png" />
+
+            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal">
+                <Image Source="pack://application:,,,/Resources/LEAP-Logo-Whited.png" Margin="5"/>
+                <TextBlock Text="{Binding Title}" Margin="5" VerticalAlignment="Center" FontSize="16" Foreground="{StaticResource TitleBarForegroundColour}" />
+            </StackPanel>
+
+            <Grid Grid.Column="1" Grid.Row="1" Background="{StaticResource TitleButtonBarBackgroundColour}">
+                <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" HorizontalAlignment="Left" Margin="5">
+                    <Button Style="{StaticResource IconButtonStyle}" IsEnabled="False">
+                        <fa:ImageAwesome Icon="Edit" />
+                    </Button>
+                    <Button Style="{StaticResource IconButtonStyle}">
+                        <fa:ImageAwesome Icon="Eraser" />
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" HorizontalAlignment="Right" Margin="5">
+                    <fa:ImageAwesome Icon="Save" Margin="4" MaxWidth="15" MaxHeight="15" Foreground="{StaticResource TitleBarForegroundColour}" />
+                    <fa:ImageAwesome Icon="Close" Margin="4" MaxWidth="15" MaxHeight="15" Foreground="{StaticResource TitleBarForegroundColour}" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <!-- Content Area -->
+        <Grid Grid.Row="1" Background="{StaticResource WorkspaceBackgroundColour}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="220" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Domain Explorer -->
+            <Grid Grid.Column="0" Background="{StaticResource DomainExplorerContentBackgroundColour}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32" />
+                    <RowDefinition Height="32" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Background="{StaticResource DomainExplorerTitleBarBackgroundColour}">
+                    <TextBlock Foreground="{StaticResource DomainExplorerTitleBarForegroundColour}" Text="Domain Explorer" VerticalAlignment="Center" Margin="5" FontSize="14" />
+                </Grid>
+
+                <Grid Grid.Row="1" Background="{StaticResource DomainExplorerButtonBarBackgroundColour}">
+                    <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" HorizontalAlignment="Right" Margin="5">
+                        <Button Style="{StaticResource IconButtonStyle}">
+                            <fa:ImageAwesome Icon="Plus" />
+                        </Button>
+                        <Button Style="{StaticResource IconButtonStyle}">
+                            <fa:ImageAwesome Icon="Edit" />
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" HorizontalAlignment="Left" Margin="5">
+                        <Button Style="{StaticResource IconButtonStyle}">
+                            <fa:ImageAwesome Icon="Refresh" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <TreeView x:Name="treev" ItemsSource="{Binding ExplorerItems}" Style="{StaticResource DomainExplorerTreeStyle}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectedItemChanged">
+                                <i:InvokeCommandAction Command="{Binding DomainExplorerSelectionChangedCommand}" CommandParameter="{Binding ElementName=treev, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Path=ChildItems}">
+                                <Grid Margin="2">
+                                    <fa:ImageAwesome Icon="Car" Margin="2" Height="12" Width="12" HorizontalAlignment="Left" Foreground="{StaticResource DomainExplorerContentForegroundColour}" />
+                                    <TextBlock Margin="24,2,2,2" HorizontalAlignment="Left" Foreground="{StaticResource DomainExplorerContentForegroundColour}" Text="{Binding Path=Name}" />
+                                </Grid>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </Grid>
+
+            </Grid>
+
+            <GridSplitter Grid.Column="1" Background="{StaticResource WorkspaceSplitterBarBackgroundColour}" Width="5" ResizeDirection="Columns" VerticalAlignment="Stretch" HorizontalAlignment="Center" />
+            <fa:ImageAwesome Grid.Column="1" Icon="EllipsisV" VerticalAlignment="Center" HorizontalAlignment="Center" Width="3" Foreground="{StaticResource WorkspaceSplitterBarForegroundColour}" />
+
+            <ContentControl Grid.Column="2" mvvm:RegionManager.RegionName="WorkspaceRegion" />
+
+            <GridSplitter Grid.Column="3" Background="{StaticResource WorkspaceSplitterBarBackgroundColour}" Width="5" VerticalAlignment="Stretch" HorizontalAlignment="Center" />
+            <fa:ImageAwesome Grid.Column="3" Icon="EllipsisV" VerticalAlignment="Center" HorizontalAlignment="Center" Width="3" Foreground="{StaticResource WorkspaceSplitterBarForegroundColour}" />
+
+            <!-- Context Section -->
+            <Grid Grid.Column="4" Background="{StaticResource ContextActionContentBackgroundColour}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="32" />
+                    <RowDefinition Height="32" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Background="{StaticResource ContextActionTitleBarBackgroundColour}">
+                    <TextBlock Foreground="{StaticResource ContextActionTitleBarForegroundColour}" Text="Context Action" VerticalAlignment="Center" Margin="5" FontSize="14" />
+                </Grid>
+
+                <Grid Grid.Row="1" Background="{StaticResource ContextActionButtonBarBackgroundColour}">
+                    <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" HorizontalAlignment="Right" Margin="5">
+                        <Button Style="{StaticResource IconButtonStyle}">
+                            <fa:ImageAwesome Icon="Save" />
+                        </Button>
+                        <Button Style="{StaticResource IconButtonStyle}">
+                            <fa:ImageAwesome Icon="Close" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+            </Grid>
+
+        </Grid>
     </Grid>
 </Window>

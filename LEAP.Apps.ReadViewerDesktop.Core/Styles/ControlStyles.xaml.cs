@@ -10,25 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using LEAP.Apps.ReadViewerDesktop.ViewModels;
 
-namespace LEAP.Apps.ReadViewerDesktop
+namespace LEAP.Apps.ReadViewerDesktop.Core.Styles
 {
     /// <summary>
-    /// Interaction logic for ApplicationWindow.xaml
+    /// Interaction logic for BaseStyles.xaml
     /// </summary>
-    public partial class ApplicationWindow : Window
+    partial class ControlStyles : ResourceDictionary
     {
-        public ApplicationWindow()
+        private void OnManipulationBoundaryFeedback(object sender, ManipulationBoundaryFeedbackEventArgs e)
         {
-            InitializeComponent();
-        }
-
-        public ApplicationWindow(ApplicationWindowViewModel viewModel)
-        {
-            InitializeComponent();
-            DataContext = viewModel;
+            e.Handled = true;
         }
     }
 }

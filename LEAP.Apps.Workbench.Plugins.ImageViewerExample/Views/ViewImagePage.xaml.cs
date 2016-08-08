@@ -10,25 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using LEAP.Apps.ReadViewerDesktop.ViewModels;
 
-namespace LEAP.Apps.ReadViewerDesktop
+namespace LEAP.Apps.Workbench.Plugins.ImageViewerExample.Views
 {
     /// <summary>
-    /// Interaction logic for ApplicationWindow.xaml
+    /// Interaction logic for ViewImagePage.xaml
     /// </summary>
-    public partial class ApplicationWindow : Window
+    public partial class ViewImagePage : UserControl
     {
-        public ApplicationWindow()
+        public ViewImagePage()
         {
             InitializeComponent();
-        }
-
-        public ApplicationWindow(ApplicationWindowViewModel viewModel)
-        {
-            InitializeComponent();
-            DataContext = viewModel;
         }
     }
 }

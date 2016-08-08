@@ -4,19 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{550AF447-B087-4B8F-B5A2-D801159328F4}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{F1DF08FB-7FE1-4E6A-84C9-6F6BBE08D4F5}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LEAP.Apps.ReadViewerDesktop</RootNamespace>
-    <AssemblyName>LEAP.Apps.ReadViewerDesktop</AssemblyName>
+    <RootNamespace>LEAP.Apps.ReadViewerDesktop.Core</RootNamespace>
+    <AssemblyName>LEAP.Apps.ReadViewerDesktop.Core</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -26,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -35,11 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LEAP.Core">
-      <HintPath>..\..\LEAP.Core\LEAP.Core\bin\Release\LEAP.Core.dll</HintPath>
+    <Reference Include="FontAwesome.WPF">
+      <HintPath>..\packages\FontAwesome.WPF.4.5.0.8\lib\net40\FontAwesome.WPF.dll</HintPath>
     </Reference>
-    <Reference Include="LEAP.ReadIO">
-      <HintPath>..\..\LEAP.ReadIO\LEAP.ReadIO\bin\Release\LEAP.ReadIO.dll</HintPath>
+    <Reference Include="LEAP.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\LEAP.Core\LEAP.Core\bin\Debug\LEAP.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -57,10 +53,8 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\packages\NLog.4.4.0-betaV14\lib\net45\NLog.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="Prism, Version=6.1.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.6.1.0\lib\net45\Prism.dll</HintPath>
       <Private>True</Private>
@@ -74,96 +68,80 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="ApplicationWindow.xaml.cs">
-      <DependentUpon>ApplicationWindow.xaml</DependentUpon>
+    <Compile Include="Components\IDomainExplorerItem.cs" />
+    <Compile Include="Extensibility\BasePlugin.cs" />
+    <Compile Include="Extensibility\BaseWorkspaceModule.cs" />
+    <Compile Include="Components\IActioner.cs" />
+    <Compile Include="Components\IFileActioner.cs" />
+    <Compile Include="Components\IFileLoader.cs" />
+    <Compile Include="Components\ILogger.cs" />
+    <Compile Include="Events\InitialisationStartedEvent.cs" />
+    <Compile Include="Navigation\ShellNavigationData.cs" />
+    <Compile Include="Events\FileLoadedEvent.cs" />
+    <Compile Include="Events\InitialisationCompleteEvent.cs" />
+    <Compile Include="Events\InitialisationErrorEvent.cs" />
+    <Compile Include="Events\InitialisationStatusUpdateEvent.cs" />
+    <Compile Include="Events\ShellNavigationRequestEvent.cs" />
+    <Compile Include="Exceptions\LeapWorkbenchException.cs" />
+    <Compile Include="Navigation\ShellNavigationTargets.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IActionComponentService.cs" />
+    <Compile Include="Services\ICommandParameterService.cs" />
+    <Compile Include="Services\IConfigurationService.cs" />
+    <Compile Include="Services\IExtensibilityService.cs" />
+    <Compile Include="Services\IWorkspaceIoService.cs" />
+    <Compile Include="Services\ILoggingService.cs" />
+    <Compile Include="Styles\ControlStyles.xaml.cs">
+      <DependentUpon>ControlStyles.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BaseViewModel.cs" />
-    <Compile Include="Splash.xaml.cs">
-      <DependentUpon>Splash.xaml</DependentUpon>
+    <Compile Include="Styles\WindowStyles.xaml.cs">
+      <DependentUpon>WindowStyles.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\SplashViewModel.cs" />
-    <Page Include="ApplicationWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="Styles\BaseStyles.xaml.cs">
+      <DependentUpon>BaseStyles.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Bootstrapper.cs" />
-    <Compile Include="ILoggingService.cs" />
-    <Compile Include="LogLevelTypes.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Splash.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="ViewModels\BasePageViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NLogLoggingProvider.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Events\" />
-    <Folder Include="Services\" />
-    <Folder Include="Views\" />
+    <Page Include="Styles\ControlStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\WindowStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\BaseStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

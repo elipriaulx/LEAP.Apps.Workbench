@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using LEAP.Apps.ReadViewerDesktop.Core.Components;
+using LEAP.Apps.ReadViewerDesktop.Core.Services;
+using LEAP.Apps.ReadViewerDesktop.Services;
+using LEAP.Apps.ReadViewerDesktop.ViewModels;
 
 namespace LEAP.Apps.ReadViewerDesktop
 {
@@ -14,14 +19,15 @@ namespace LEAP.Apps.ReadViewerDesktop
     /// </summary>
     public partial class App : Application
     {
-        private ILoggingService _logger;
+        private ILogger _logger;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             // Create a logger
             try
             {
-                _logger = new NLogLoggingProvider();
+                var loggerFactory = new LoggingServiceProvider();
+                _logger = loggerFactory.CreateLogger();
             }
             catch (Exception ex)
             {
@@ -35,7 +41,7 @@ namespace LEAP.Apps.ReadViewerDesktop
             }
             catch (Exception ex)
             {
-                _logger?.Log(LogLevelTypes.Critical, ex);
+                _logger?.Critical(ex);
 
                 Shutdown();
             }
@@ -43,7 +49,7 @@ namespace LEAP.Apps.ReadViewerDesktop
 
         protected override void OnExit(ExitEventArgs e)
         {
-            _logger?.Log(LogLevelTypes.Info, "Application instance terminating.");
+            _logger?.Info("Application instance terminating.");
 
             base.OnExit(e);
         }
