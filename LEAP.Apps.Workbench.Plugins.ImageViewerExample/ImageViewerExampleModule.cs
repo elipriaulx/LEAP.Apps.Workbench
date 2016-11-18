@@ -21,7 +21,7 @@ namespace LEAP.Apps.Workbench.Plugins.ImageViewerExample
         private readonly IRegionManager _regionManager;
         private IUnityContainer _container;
 
-        public ImageViewerExampleModule(IRegionViewRegistry regionViewRegistry, IRegionManager regionManager, IUnityContainer container, IWorkspaceIoService savedFileLoadService)
+        public ImageViewerExampleModule(IRegionViewRegistry regionViewRegistry, IRegionManager regionManager, IUnityContainer container, IWorkspaceManagementService savedFileLoadService)
         {
             _regionViewRegistry = regionViewRegistry;
             _regionManager = regionManager;

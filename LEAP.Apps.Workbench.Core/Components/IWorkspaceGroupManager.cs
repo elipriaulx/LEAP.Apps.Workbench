@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace LEAP.Apps.Workbench.Core.Components
 {
-    public interface IFileLoader
+    public interface IWorkspaceGroupManager
     {
         Guid Id { get; }
         string Name { get; }

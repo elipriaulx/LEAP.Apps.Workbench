@@ -14,7 +14,7 @@ namespace LEAP.Apps.Workbench
         private readonly IRegionViewRegistry _regionViewRegistry;
         private IUnityContainer _container;
 
-        public ShellModule(IRegionViewRegistry regionViewRegistry, IUnityContainer container, IWorkspaceIoService savedFileLoadService)
+        public ShellModule(IRegionViewRegistry regionViewRegistry, IUnityContainer container, IWorkspaceManagementService savedFileLoadService)
         {
             _regionViewRegistry = regionViewRegistry;
             _container = container;

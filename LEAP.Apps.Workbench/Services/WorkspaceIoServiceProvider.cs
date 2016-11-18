@@ -6,23 +6,23 @@ using LEAP.Apps.Workbench.Core.Services;
 
 namespace LEAP.Apps.Workbench.Services
 {
-    public class WorkspaceIoServiceProvider : IWorkspaceIoService
+    public class WorkspaceIoServiceProvider : IWorkspaceManagementService
     {
         private readonly ILogger _logger;
-        private readonly Dictionary<string, IList<IFileLoader>> _loaders;
+        private readonly Dictionary<string, IList<IWorkspaceGroupManager>> _loaders;
 
         public WorkspaceIoServiceProvider(ILoggingService loggingService)
         {
             _logger = loggingService.CreateLogger(nameof(WorkspaceIoServiceProvider));
 
-            _loaders = new Dictionary<string, IList<IFileLoader>>();
+            _loaders = new Dictionary<string, IList<IWorkspaceGroupManager>>();
         }
 
-        public IFileLoader RegisterLoader(string extension, Guid id, string name, Func<string, object> fileLoader)
+        public IWorkspaceGroupManager RegisterLoader(string extension, Guid id, string name, Func<string, object> fileLoader)
         {
             extension = extension.Trim().ToLower();
 
-            IList<IFileLoader> loaderBatch = null;
+            IList<IWorkspaceGroupManager> loaderBatch = null;
 
             try
             {
@@ -44,7 +44,7 @@ namespace LEAP.Apps.Workbench.Services
 
             if (loaderBatch == null)
             {
-                loaderBatch = new List<IFileLoader>();
+                loaderBatch = new List<IWorkspaceGroupManager>();
                 _loaders[extension] = loaderBatch;
             }
 
@@ -53,11 +53,11 @@ namespace LEAP.Apps.Workbench.Services
             return loader;
         }
 
-        public void UnregisterLoader(string extension, IFileLoader fileLoader)
+        public void UnregisterLoader(string extension, IWorkspaceGroupManager fileLoader)
         {
             extension = extension.Trim().ToLower();
 
-            IList<IFileLoader> loaderBatch = null;
+            IList<IWorkspaceGroupManager> loaderBatch = null;
 
             try
             {
@@ -71,11 +71,11 @@ namespace LEAP.Apps.Workbench.Services
             loaderBatch?.Remove(fileLoader);
         }
 
-        public IFileLoader GetLoader(string extension, Guid loaderId)
+        public IWorkspaceGroupManager GetLoader(string extension, Guid loaderId)
         {
             extension = extension.Trim().ToLower();
 
-            IList<IFileLoader> loaderBatch = null;
+            IList<IWorkspaceGroupManager> loaderBatch = null;
 
             try
             {
@@ -89,11 +89,11 @@ namespace LEAP.Apps.Workbench.Services
             return loaderBatch?.FirstOrDefault(x => x.Id == loaderId);
         }
 
-        public IEnumerable<IFileLoader> GetLoaders(string extension)
+        public IEnumerable<IWorkspaceGroupManager> GetLoaders(string extension)
         {
             extension = extension.Trim().ToLower();
 
-            IList<IFileLoader> loaderBatch = null;
+            IList<IWorkspaceGroupManager> loaderBatch = null;
 
             try
             {
@@ -107,12 +107,12 @@ namespace LEAP.Apps.Workbench.Services
             return loaderBatch;
         }
 
-        public IReadOnlyDictionary<string, IReadOnlyList<IFileLoader>> GetAllLoaders()
+        public IReadOnlyDictionary<string, IReadOnlyList<IWorkspaceGroupManager>> GetAllLoaders()
         {
-            return _loaders.ToDictionary<KeyValuePair<string, IList<IFileLoader>>, string, IReadOnlyList<IFileLoader>>(i => i.Key, i => i.Value.ToList());
+            return _loaders.ToDictionary<KeyValuePair<string, IList<IWorkspaceGroupManager>>, string, IReadOnlyList<IWorkspaceGroupManager>>(i => i.Key, i => i.Value.ToList());
         }
         
-        private class FileLoader : IFileLoader
+        private class FileLoader : IWorkspaceGroupManager
         {
             private readonly IList<IFileActioner> _actioners;
 

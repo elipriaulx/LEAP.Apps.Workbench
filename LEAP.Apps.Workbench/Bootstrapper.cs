@@ -66,7 +66,7 @@ namespace LEAP.Apps.Workbench
             Container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ILoggingService, LoggingServiceProvider>(new ContainerControlledLifetimeManager());
             Container.RegisterType<ICommandParameterService, CommandParameterServiceProvider>(new ContainerControlledLifetimeManager());
-            Container.RegisterType<IWorkspaceIoService, WorkspaceIoServiceProvider>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IWorkspaceManagementService, WorkspaceIoServiceProvider>(new ContainerControlledLifetimeManager());
             // Container.RegisterType<IActionComponentService, CommandParameterServiceProvider>(new ContainerControlledLifetimeManager());
         }
 

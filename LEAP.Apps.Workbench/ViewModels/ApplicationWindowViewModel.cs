@@ -20,7 +20,7 @@ namespace LEAP.Apps.Workbench.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly IRegionManager _regionManager;
         private readonly ICommandParameterService _commandParameterService;
-        private readonly IWorkspaceIoService _savedFileLoadService;
+        private readonly IWorkspaceManagementService _savedFileLoadService;
         private readonly ILogger _logger;
 
         public ApplicationWindowViewModel()
@@ -28,7 +28,7 @@ namespace LEAP.Apps.Workbench.ViewModels
             Title = "Workbench";
         }
 
-        public ApplicationWindowViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, ILoggingService loggingService, ICommandParameterService commandParameterService, IWorkspaceIoService savedFileLoadService)
+        public ApplicationWindowViewModel(IEventAggregator eventAggregator, IRegionManager regionManager, ILoggingService loggingService, ICommandParameterService commandParameterService, IWorkspaceManagementService savedFileLoadService)
         {
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;

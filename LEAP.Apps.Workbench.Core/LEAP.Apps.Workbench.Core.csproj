@@ -86,7 +86,7 @@
     <Compile Include="Extensibility\BaseWorkspaceModule.cs" />
     <Compile Include="Components\IActioner.cs" />
     <Compile Include="Components\IFileActioner.cs" />
-    <Compile Include="Components\IFileLoader.cs" />
+    <Compile Include="Components\IWorkspaceGroupManager.cs" />
     <Compile Include="Components\ILogger.cs" />
     <Compile Include="Events\InitialisationStartedEvent.cs" />
     <Compile Include="Navigation\ShellNavigationData.cs" />
@@ -102,7 +102,7 @@
     <Compile Include="Services\ICommandParameterService.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
     <Compile Include="Services\IExtensibilityService.cs" />
-    <Compile Include="Services\IWorkspaceIoService.cs" />
+    <Compile Include="Services\IWorkspaceManagementService.cs" />
     <Compile Include="Services\ILoggingService.cs" />
     <Compile Include="Styles\ControlStyles.xaml.cs">
       <DependentUpon>ControlStyles.xaml</DependentUpon>
